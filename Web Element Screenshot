@@ -1,0 +1,6 @@
+Api Changes:public interface WebElement extends SearchContext, TakesScreenshot
+In addition to SearchContext, the WebElement Interface will now extend TakesScreenshot
+
+Code Snippet
+WebElement element = driver.findElement(By Locator);
+File sourceFile = element.getScreenshotAs(OutputType.FILE);
