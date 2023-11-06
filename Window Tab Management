@@ -1,0 +1,28 @@
+1)= newWindow(WindowType typeHint)
+
+Enum WindowType=TAB,WINDOW constants
+
+Use Case
+
+Let's take a scenario. On our registration page, the address field value comes from different applications, as my address is saved on another application. Up until Selenium 3, it was not possible to open multiple
+applications in different tabs or windows. But with Selenium 4, users can open multiple windows and tabs and switch to them automatically. So first we will open our registration page, and then we will open the
+application that holds addresses and retrieves addresses into variables. But if we want to return to our first registration page, we need to switch to it.
+
+Code Snippet 
+
+driver.get("URL to land on the application registration page");
+//Get all Window Id
+String windowId = driver.getWindowHandle();
+//Open a new window or tab
+driver.switchTo().newWindow(WindowType.WINDOW);
+Or
+driver.switchTo().newWindow(WindowType.TAB);
+
+//Open another application that holds the address.
+driver.get("Other Application URL");
+//Retrieve address and store it in a variable
+String address = driver.findElement(by Locator)). getText();
+//Switch to the First Application 
+driver.switchTo().window(windowId);
+//Enter your address on the registration page.
+driver.findElement(By Locator).sendKeys(address);
