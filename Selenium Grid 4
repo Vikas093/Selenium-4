@@ -1,0 +1,52 @@
+Internal Architecture
+
+Selenium Grid 4 also reveals the internal architecture of the grid, which is missing from Selenium Grid 3 refer https://www.selenium.dev/documentation/grid/architecture/
+
+a)=Router:Receive all requests and forward them to the corresponding node with the help of a session map if they are existing requests, and forward them to the New Session Queue if they are new requests.
+
+b)=Distributor: The distributor deals with two important tasks: first, storing all node capabilities, and second, processing any pending new session requests.
+
+c)=Session Map: Supports the router in the process of forwarding requests to the corresponding node.
+
+d)=Node: Machine where test execution is done.
+
+e)=New Session Queue: holds all new session requests and then, with the help of the distributor, forwards the request to the corresponding node.
+
+f)=Event Bus: Serves as a communication path between nodes, distributors, new session queues, and session maps.
+
+Depending on user requirements The grid is classified into three types. 
+a)= Standalone Mode
+b)= Hub and node
+c)= Distributed 
+
+1)=Standalone Mode=Standalone is the best choice when users want a fully functional grid with a single command. Standalone can only run on a single machine. The server will listen for RemoteWebDriver requests on 
+http://localhost:4444. By default, the server will detect the available drivers that it can use from the System PATH. Invoked by the below command
+
+java -jar selenium-server-<version>.jar standalone
+
+2)=Hub and node=This is the traditional way to use the grid, which consists of two components: hubs and nodes. With this approach, users can combine different machines on a single grid. machines with different
+operating systems or browser versions.Invoked by the below command
+
+
+Starting hub and node on same machine 
+
+Starting Hub
+
+java -jar selenium-server-<version>.jar hub
+
+Starting node
+
+java -jar selenium-server-<version>.jar node
+
+More than one Node on the same machine 
+
+Node 1=java -jar selenium-server-<version>.jar node --port 5555
+Node 2=java -jar selenium-server-<version>.jar node --port 6666
+
+Starting Hub and node on Different machine
+
+Please refer https://www.selenium.dev/documentation/grid/getting_started/
+
+3)=Distributed =The best choice for large grid setups where users need to start each grid component(mentioned above) separately.
+
+Please refer https://www.selenium.dev/documentation/grid/getting_started/
