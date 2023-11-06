@@ -1,0 +1,11 @@
+What has changed?
+
+Previous InvalidSelectorException
+
+public class InvalidSelectorException extends NoSuchElementException 
+
+Now InvalidSelectorException
+
+public class  InvalidSelectorException now extends from WebDriverException.
+
+With the changes mentioned above, an invalid selector will throw an InvalidSelectorException immediately.
