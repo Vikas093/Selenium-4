@@ -1,0 +1,30 @@
+For utilizing Selenium Manager, you need to use Selenium version 4.6 jar in your build path, or if you are using build automation tools like Maven, just add dependencies to your POM.xml file, and you also need to have corresponding browsers installed in your system (like Chrome,Firefox, Edge, Safari, etc.). 
+
+
+Use Case:
+Just add the code below to your corresponding IDE.
+WebDriver driver=new ChromeDriver();
+When you run your test script internally, your script will talk to the executable file for Windows, selenium-manager.exe; for Mac, selenium-manager; and for Linux, selenium-manager, etc. Navigate to the location (/.cache/selenium), which contains all the information below.
+	  {
+  "browsers": [ {
+      "browser_name": "firefox",
+      "browser_version": "95",     
+    } ],
+  "drivers": [{
+      "browser_version": "111",
+      "driver_name": "chromedriver",
+      "driver_version": "111.0.5563.64", },
+    {
+      "browser_version": "95",
+      "driver_name": "geckodriver",
+      "driver_version": "0.32.2",     
+    } ]  
+  If a driver executable is present in your system, this feature is ignored. Selenium Manager only operates as a fallback: if no driver is provided.
+
+What New in Selenium Version 4.11.0
+
+From version 115, the Chrome team started a new initiative to provide Chrome for Testing (CfT), link as ChromeBinaryAndDriverDownloadv115andGreater, which means a browser that is only meant for testing. One key difference between the regular Chrome browser and CfT is that CfT will not update automatically unless it is discovered programmatically using the CfT endpoint.
+
+User Responsibility
+
+Selenium users are required to update to version 4.11.0. Selenium will take over all browser and driver management internally.
