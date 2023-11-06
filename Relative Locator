@@ -1,0 +1,15 @@
+1)=To interact with an input field located near a label element
+
+label = driver.find_element(By.XPATH, "//label[text()='Username']")
+input_field = driver.find_element(By.ID, "username")
+
+# Using Relative Locator to find the input field near the label
+relative_input_field = input_field.find_element(with_tag_name("input").to_left_of(label))
+
+# Interact with the input field
+relative_input_field.send_keys("your_username")
+
+2)=Find an element below and to the right of another element
+
+element = driver.find_element(By.XPATH, "//div[contains(text(), 'Some Text')]")
+Nearby_button=driver.find_element(with_tag_name("button").below(element).to_right_of(element))
