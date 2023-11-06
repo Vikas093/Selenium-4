@@ -1,0 +1,67 @@
+Many browsers provide dev tools, which are tools integrated with the browser that the development team can use to debug web applications. Google Dev Tools make use of a protocol called the Chrome DevTools 
+Protocol. Chrome dev tools can be accessed in the browser by keyboard shortcuts like CTRL + SHIFT + I or F12.
+
+Selenium 4 provides support for Chrome development tools. Selenium 4 introduces functions and methods that are wrappers of the Chrome DevTools Protocol API for providing access to the dev tools option directly
+from our automated test cases.
+
+As mentioned above, the Chrome Dev Tools API is not stable. One big limitation of using CDP is that it supports only a few browsers, such as Chrome, Edge, and Firefox, while Selenium supports other browsers as 
+well, like Opera and Safari. So the Selenium team is working on a stable solution that is nothing but W3C-standard Webdriver BiDi APIs that will support all Selenium-supported browsers. But it is still under 
+process.
+
+1)=send(command)=This method is used when the user wants to use the Selenium version of Chrome Dev Tools Implementation. Internally,  it will call the Chrome Dev Tools api.
+
+2)=executeCdpCommand()=This method is used when the user wants to bypass the Selenium version of Chrome Dev Tools Implementation. It will directly call the Chrome Dev Tools api.
+Note:The send() method will be available on the DevTools class and package org.openqa.selenium.devtools, and executeCdpCommand() will be available on the interface HasCdp and package org.openqa.selenium.chromium.
+
+Use Case
+
+Following the link, provide Chrome Dev Tools documentation for accessing the API details.
+
+1)=Emulate Device
+
+Emulate Device is changing the width, height, etc. if we want to know how our webpage looks on a mobile device like an Android, iPhone,Ipad to verify the mobile responsiveness of an application.
+
+Selenium Script Steps:
+/**Initialize Driver (here we cannot take a reference to WebDriver because the Chrome Dev Tools method is present in Chromium Driver and classes like Chrome, FireFox, and Edge Driver extend that Chromium Class)**/
+ChromeDriver driver=new ChromeDriver();
+//Get DevTools Instance
+DevTools devTools = driver. getDevTools();
+Now that we have a Dev Tools instance, first we need to create a browser session.
+devTools.createSession();
+All the above steps will be the same for all CDP operations.
+
+For changing device emulation, we need to use setDeviceMetricsOverride. Present inside the Emulation class as parameters, only three fields are mandatory: width, height, and deviceScaleFactor. The rest field can
+be treated as optional if required, and the user can provide values for those fields. **/
+
+devTools.send(Emulation.setDeviceMetricsOverride(360, 740, 50, true, java.util.Optional.empty(), java.util.Optional.empty(), java.util.Optional.empty(), java.util.Optional.empty(), java.util.Optional.empty(), 
+java.util.Optional.empty(), java.util.Optional.empty();
+//Open Application
+driver.get("Application URL");
+Executing the above steps will launch the browser in mobile view with the provided coordinates.
+In the above example, we use the send method to call the Chrome devtools protocol API. In the next use case, let's see how executeCdpCommand() works.
+
+2)=Log Console Events
+For capturing console logs
+Selenium Script Steps:
+
+/**Initialize Driver (here we cannot take a reference to WebDriver because the Chrome Dev Tools method is present in Chromium Driver and classes like Chrome, FireFox, and Edge Driver extend that Chromium Class)
+**/
+
+ChromeDriver driver = new ChromeDriver();
+
+//Get DevTools Instance
+DevTools devTools = driver.getDevTools();
+Now that we have a Dev Tools instance, first we need to create a browser session.
+devTools.createSession();
+
+//To enable the log
+Map enableProp=new HashMap();
+devTools.executeCdpCommand(“Log.enable”,enableProp);
+
+//We need to add a listener to Log. entryAdded() as addListener(EventX> event, ConsumerX> handler)
+devTools.addListener(Log.entryAdded(),
+		                           logEntry -> {
+		                              Reporter.log(logEntry.getUrl().toString(),true);
+		                           });
+//Open Application
+driver.get("Application URL");
